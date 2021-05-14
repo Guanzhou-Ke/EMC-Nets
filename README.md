@@ -1,2 +1,2 @@
-# EMC-Net
-The official repos of Efficient Multi-view Clustering Network
+# EMC-Nets
+The official repos of Efficient Multi-view Clustering Networks
