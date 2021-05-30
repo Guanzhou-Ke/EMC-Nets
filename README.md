@@ -48,6 +48,23 @@ Run:
 python validation.py
 ```
 
+Result:
+```
+------------------------------ Begin validation BDGP ------------------------------
+CV 1 Beginning...
+Acc.: 98.60% NMI: 95.41% purity: 98.60% and ARI: 96.55%
+CV 2 Beginning...
+Acc.: 98.56% NMI: 95.27% purity: 98.56% and ARI: 96.45%
+CV 3 Beginning...
+Acc.: 98.56% NMI: 95.27% purity: 98.56% and ARI: 96.45%
+CV 4 Beginning...
+Acc.: 98.56% NMI: 95.27% purity: 98.56% and ARI: 96.45%
+CV 5 Beginning...
+Acc.: 98.56% NMI: 95.27% purity: 98.56% and ARI: 96.45%
+After ron 5 times, final Acc.: 98.57% NMI: 95.30% purity: 98.57% and ARI: 96.47%
+------------------------------ End validation BDGP ------------------------------
+```
+
 More training details see `logs/`
 
 ## Training
