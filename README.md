@@ -77,3 +77,13 @@ Here, we present the visualization of BDGP. More details see our paper, please.
 
 ![visualization](./imgs/visualization.png)
 
+## Cite
+
+This paper is under review.
+
+## Acknowledge
+
+This paper was inspired by [DeepCluster](https://openaccess.thecvf.com/content_ECCV_2018/papers/Mathilde_Caron_Deep_Clustering_for_ECCV_2018_paper.pdf), 
+[OnlineCluster](https://openaccess.thecvf.com/content_CVPR_2020/papers/Zhan_Online_Deep_Clustering_for_Unsupervised_Representation_Learning_CVPR_2020_paper.pdf).
+
+
