@@ -7,8 +7,8 @@ Deep learning has made remarkable progress on multi-view clustering (MvC) in the
 adopted a broad target to guide network learning, such as minimize the reconstruction loss. It is effective but not 
 efficient. In this paper, we proposed a novel framework, named Efficient Multi-view Clustering Networks (EMC-Nets),
  which guarantees the efficiency of the network learning and produces discriminative common representation efficiently 
- in multi- ple sources. Specifically, the proposed method alternates between the instruction process and approximation 
- process during training. The instruction process em- ploys a standard clustering algorithm, such as k-means, 
+ in multiple sources. Specifically, the proposed method alternates between the instruction process and approximation 
+ process during training. The instruction process employs a standard clustering algorithm, such as k-means, 
  to generate pseudo-labels corresponding to the current common representation. The approximation process leverages 
  pseudo-labels to force the network to approximate a reasonable cluster distribution. Experimental results on four 
  real-world datasets demonstrate that the proposed method outperforms state-of-the-art methods.
