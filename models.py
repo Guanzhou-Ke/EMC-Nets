@@ -67,27 +67,27 @@ class Net4BDGP(BaseNet):
             nn.Linear(500, 300, bias=True),
             nn.ReLU(True),
             nn.Dropout(.5),
-            nn.Linear(300, self.nz, bias=True),
+            nn.Linear(300, self.nz//2, bias=True),
             nn.ReLU(True),
         )
         self.encoder2 = nn.Sequential(
             nn.Linear(input_B, 300, bias=False),
             nn.ReLU(True),
             nn.Dropout(.5),
-            nn.Linear(300, self.nz, bias=True),
+            nn.Linear(300, self.nz//2, bias=True),
             nn.ReLU(True),
         )
 
         # Add Transformer.
-        self.trans_enc = nn.TransformerEncoderLayer(d_model=self.nz * 2, nhead=1, dim_feedforward=256)
+        self.trans_enc = nn.TransformerEncoderLayer(d_model=self.nz, nhead=1, dim_feedforward=256)
         self.extract_layers = nn.TransformerEncoder(self.trans_enc, num_layers=1)
 
         self.cls_layer = nn.Sequential(
-            nn.Linear(self.nz * 2, 5),
+            nn.Linear(self.nz, 5),
             nn.Sigmoid()
         )
 
-        self.layer4 = nn.Linear(self.nz * 2, 300)
+        self.layer4 = nn.Linear(self.nz, 300)
         self.layer5_1 = nn.Linear(300, 500)
         self.layer6_1 = nn.Linear(500, input_A)
         self.layer6_2 = nn.Linear(300, input_B)
@@ -100,27 +100,6 @@ class Net4BDGP(BaseNet):
         self.recon_criterion = nn.BCELoss(reduction='none')
         self.cls_criterion = nn.CrossEntropyLoss()
 
-    def weights_init(self, init_type='gaussian'):
-        def init_fun(m):
-            classname = m.__class__.__name__
-            if (classname.find('Conv') == 0 or classname.find('Linear') == 0) and hasattr(m, 'weight'):
-                # print m.__class__.__name__
-                if init_type == 'gaussian':
-                    init.normal_(m.weight.data, 0.0, 0.02)
-                elif init_type == 'xavier':
-                    init.xavier_normal_(m.weight.data, gain=math.sqrt(2))
-                elif init_type == 'kaiming':
-                    init.kaiming_normal_(m.weight.data, a=0, mode='fan_in')
-                elif init_type == 'orthogonal':
-                    init.orthogonal_(m.weight.data, gain=math.sqrt(2))
-                elif init_type == 'default':
-                    pass
-                else:
-                    assert 0, "Unsupported initialization: {}".format(init_type)
-                if hasattr(m, 'bias') and m.bias is not None:
-                    init.constant_(m.bias.data, 0.0)
-
-        return init_fun
 
     def forward(self, Xs):
         x1, x2 = Xs
@@ -187,10 +166,11 @@ class Net4BDGP(BaseNet):
 
 class Net4Mnist(BaseNet):
 
-    def __init__(self, input_A, input_B):
+    def __init__(self, input_A, input_B, nz):
         super().__init__()
         # input_A = 784  input_B = 784
         # self.layer1_1 = nn.Linear(input_A, 400, bias=False)
+        self.nz = nz
         self.encoder1 = nn.Sequential(
             nn.Linear(784, 400, bias=False),
             nn.ReLU(True),
@@ -214,15 +194,15 @@ class Net4Mnist(BaseNet):
 
 
         # Add Transformer.
-        self.trans_enc = nn.TransformerEncoderLayer(d_model=200, nhead=1, dim_feedforward=1024)
+        self.trans_enc = nn.TransformerEncoderLayer(d_model=self.nz, nhead=1, dim_feedforward=1024)
         self.extract_layers = nn.TransformerEncoder(self.trans_enc, num_layers=2)
 
         self.cls_layer = nn.Sequential(
-            nn.Linear(200, 10),
+            nn.Linear(self.nz, 10),
             nn.Sigmoid()
         )
 
-        self.layer4 = nn.Linear(200, 400)
+        self.layer4 = nn.Linear(self.nz, 400)
         self.layer5_1 = nn.Linear(400, 500)
         self.layer5_2 = nn.Linear(400, 500)
         self.layer6_1 = nn.Linear(500, input_A)
@@ -265,12 +245,6 @@ class Net4Mnist(BaseNet):
             cls_loss = self.cls_criterion(y, labels)
             _, preds = torch.max(y, 1)
             batch_acc = torch.sum(preds == labels)
-
-            #             latent = self.test_commonZ(Xs)
-            #             recon1, recon2 = self.decoder(latent)
-            #             recon_loss = 0.3 * self.recon_criterion(recon2, Xs[1]).mean(0).sum() + \
-            #             0.7 * self.recon_criterion(recon1, Xs[0]).mean(0).sum()
-            #             loss = 0.5 * recon_loss + 0.5 * cls_loss
             return cls_loss
         else:
             latent = self.test_commonZ(Xs)
@@ -280,12 +254,6 @@ class Net4Mnist(BaseNet):
             return recon_loss
 
     def test_commonZ(self, Xs):
-        # x1, x2 = Xs
-        # x1 = F.dropout(F.relu(self.layer1_1(x1.view(-1, 784))), self.drop)
-        # x2 = F.dropout(F.relu(self.layer1_2(x2.view(-1, 784))), self.drop)
-        #
-        # latent = self.extract_layers(torch.cat((x1, x2), 1))
-
         x1, x2 = Xs
         x1 = self.encoder1(x1.view(-1, 784)).unsqueeze(1)
         x2 = self.encoder2(x2.view(-1, 784)).unsqueeze(1)

@@ -6,6 +6,7 @@ import faiss
 from sklearn.cluster import KMeans
 from sklearn.metrics import normalized_mutual_info_score, confusion_matrix, adjusted_rand_score
 
+
 def seed_everything(seed):
     np.random.seed(seed)
     torch.manual_seed(seed)

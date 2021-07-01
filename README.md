@@ -18,6 +18,10 @@ efficient. In this paper, we proposed a novel framework, named Efficient Multi-v
 
 ![architecture](./imgs/architecture.png)
 
+### Attention Fusion Layer
+
+![attn](./imgs/attention-fusion.png)
+
 
 ## Environment setting
 
