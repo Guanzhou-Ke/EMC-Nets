@@ -83,7 +83,15 @@ Here, we present the visualization of BDGP. More details see our paper, please.
 
 ## Cite
 
-This paper is under review.
+```@article{Ke_2022,	
+doi = {10.1007/s10489-021-03129-0},	
+url = {https://doi.org/10.1007%2Fs10489-021-03129-0},	
+year = 2022,	
+month = {jan},	
+publisher = {Springer Science and Business Media {LLC}},	
+author = {Guanzhou Ke and Zhiyong Hong and Wenhua Yu and Xin Zhang and Zeyi Liu},	
+title = {Efficient multi-view clustering networks},	
+journal = {Applied Intelligence}}```
 
 ## Acknowledge
 
