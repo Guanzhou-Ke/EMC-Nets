@@ -81,7 +81,7 @@ Here, we present the visualization of BDGP. More details see our paper, please.
 
 ![visualization](./imgs/visualization.png)
 
-## Cite
+## Citation
 
 ```@article{Ke_2022,	
 doi = {10.1007/s10489-021-03129-0},	
